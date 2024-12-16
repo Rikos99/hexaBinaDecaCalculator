@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hexadecimal Binary Calculator</string>
+    <string name="inputHEX1">Enter 1st hexadecimal number</string>
+    <string name="inputBIN1">Enter 1st binary number</string>
+    <string name="inputDEC1">Enter 1st decimal number</string>
+    <string-array name="spinner_mode">
+        <item>Decimal sum</item>
+        <item>Binary sum</item>
+        <item>Hexadecimal sum</item>
+    </string-array>
+    <string name="inputHEX2">Enter 2nd hexadecimal number</string>
+    <string name="inputDEC2">Enter 2nd decimal number</string>
+    <string name="inputBIN2">Enter 2nd binary number</string>
+    <string name="compute">Compute</string>
+    <string name="errorEnterBothValues">Enter both values</string>
+    <string name="aboutAppName">Hexadecimal Binary Decimal Calculator</string>
+    <string name="aboutAuthor">Author\'s GitHub</string>
+    <string-array name="convertSpinner_mode">
+        <item>Decimal</item>
+        <item>Binary</item>
+        <item>Hexadecimal</item>
+    </string-array>
+    <string name="navCalc">Calculator</string>
+    <string name="navConv">Conversion</string>
+    <string name="navAbout">About app</string>
+    <string name="convInputHEX">Enter a hexadecimal number</string>
+    <string name="convInputBIN">Enter a binary number</string>
+    <string name="convConvertBTN">Convert</string>
+    <string name="toolbarMain">Calculator</string>
+    <string name="toolbarConv">Conversion</string>
+    <string name="toolbarAbout">About</string>
+</resources>

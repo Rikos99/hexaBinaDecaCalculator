@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Hexadecimální Binární Kalkulačka</string>
+    <string name="inputHEX1">Zadejte 1. hexadecimální číslo</string>
+    <string name="inputBIN1">Zadejte 1. binární číslo</string>
+    <string name="inputDEC1">Zadejte 1. dekadické číslo</string>
+    <string-array name="spinner_mode">
+        <item>Dekadický součet</item>
+        <item>Binární součet</item>
+        <item>Hexadecimální součet</item>
+    </string-array>
+    <string name="inputHEX2">Zadejte 2. hexacedimální číslo</string>
+    <string name="inputDEC2">Zadejte 2. dekadické číslo</string>
+    <string name="inputBIN2">Zadejte 2. binární číslo</string>
+    <string name="compute">Spočítat</string>
+    <string name="errorEnterBothValues">Zadejte obě hodnoty</string>
+    <string name="aboutAppName">Hexadecimální Binární Decimální Kalkulačka</string>
+    <string name="aboutAuthor">GitHub Autora</string>
+    <string-array name="convertSpinner_mode">
+        <item>Decimální</item>
+        <item>Binární</item>
+        <item>Hexadecimální</item>
+    </string-array>
+    <string name="navCalc">Kalkulačka</string>
+    <string name="navConv">Převod</string>
+    <string name="navAbout">O aplikaci</string>
+    <string name="convInputHEX">Zadejte hexadecimální číslo</string>
+    <string name="convInputBIN">Zadejte binární číslo</string>
+    <string name="convConvertBTN">Převést</string>
+    <string name="toolbarMain">Kalkulačka</string>
+    <string name="toolbarConv">Konverze</string>
+    <string name="toolbarAbout">O aplikaci</string>
+</resources>
