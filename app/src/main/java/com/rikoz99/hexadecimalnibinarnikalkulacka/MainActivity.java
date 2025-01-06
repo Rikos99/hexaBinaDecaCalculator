@@ -26,7 +26,7 @@ public class MainActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setBottomMenu(R.id.bottomNavItemCalc);
-        this.setToolbar(getString(R.string.toolbarMain), true);
+        this.setToolbar(getString(R.string.toolbarMain), false);
 
 
         input1_ET = findViewById(R.id.inputDEC1);
