@@ -29,4 +29,5 @@
     <string name="toolbarMain">Kalkulačka</string>
     <string name="toolbarConv">Konverze</string>
     <string name="toolbarAbout">O aplikaci</string>
+    <string name="restoreMain">Obnovit</string>
 </resources>

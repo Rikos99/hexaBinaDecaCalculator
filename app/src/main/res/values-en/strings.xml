@@ -30,4 +30,5 @@
     <string name="toolbarMain">Calculator</string>
     <string name="toolbarConv">Conversion</string>
     <string name="toolbarAbout">About</string>
+    <string name="restoreMain">Restore</string>
 </resources>

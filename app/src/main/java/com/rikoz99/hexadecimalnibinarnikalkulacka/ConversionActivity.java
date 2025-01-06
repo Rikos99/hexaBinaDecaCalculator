@@ -18,19 +18,33 @@ public class ConversionActivity extends NavigationActivity {
         this.setToolbar(getString(R.string.toolbarConv), true);
 
         convModeFrom_SPIN = findViewById(R.id.convertSpinnerModeFrom);
-        convModeTo_SPIN = findViewById(R.id.convertSpinnerModeTo);
+        // convModeTo_SPIN = findViewById(R.id.convertSpinnerModeTo);
+
+        //TODO nefunguje!
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> adapterFrom = ArrayAdapter.createFromResource(
+                this,
+                array.convertSpinner_mode,
+                android.R.layout.simple_spinner_item
+        );
+        /*
+        // Specify the layout to use when the list of choices appears.
+        adapterFrom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner.
+        convModeFrom_SPIN.setAdapter(adapterFrom);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout.
+        ArrayAdapter<CharSequence> adapterTo = ArrayAdapter.createFromResource(
                 this,
                 array.convertSpinner_mode,
                 android.R.layout.simple_spinner_item
         );
         // Specify the layout to use when the list of choices appears.
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
-        convModeFrom_SPIN.setAdapter(adapter);
+        convModeFrom_SPIN.setAdapter(adapterTo);
 
-
+         */
     }
 }
