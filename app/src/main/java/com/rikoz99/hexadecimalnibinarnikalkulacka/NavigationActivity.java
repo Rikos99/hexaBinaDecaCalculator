@@ -25,6 +25,7 @@ public class NavigationActivity extends AppCompatActivity
         Intent intCalc = new Intent(this, MainActivity.class);
         Intent intAbout = new Intent(this, AboutActivity.class);
         Intent intConv = new Intent(this, ConversionActivity.class);
+        Intent intSettings = new Intent(this, SettingsActivity.class);
 
         bottomNav = findViewById(R.id.bottomNavigation);
         bottomNav.setSelectedItemId(selectedItemID);
@@ -44,12 +45,7 @@ public class NavigationActivity extends AppCompatActivity
                 {
                     startActivity(intAbout);
                 }
-                else
-                {
-                    return false;
-                }
-
-                return true;
+                return false;
             }
         });
     }
@@ -66,7 +62,7 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.options_menu_default, menu);
+        getMenuInflater().inflate(R.menu.options_menu_conversion, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,7 +72,7 @@ public class NavigationActivity extends AppCompatActivity
 
         if(itemId == R.id.optionsMenuItemSettings)
         {
-            //startActivity(intGoToSettings);
+            //startActivity(intSettings);
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         }
         else if(itemId == R.id.optionsMenuItemSave)

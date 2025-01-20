@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HexadecimalniBinarniKalkulacka"
         tools:targetApi="31">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
@@ -22,8 +25,8 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:configChanges="screenLayout|screenSize|orientation">
+            android:configChanges="screenLayout|screenSize|orientation"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

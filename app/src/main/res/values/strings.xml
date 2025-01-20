@@ -23,6 +23,7 @@
     <string name="navCalc">Kalkulačka</string>
     <string name="navConv">Převod</string>
     <string name="navAbout">O aplikaci</string>
+    <string name="convInputDEC">Zadejte dekadické číslo</string>
     <string name="convInputHEX">Zadejte hexadecimální číslo</string>
     <string name="convInputBIN">Zadejte binární číslo</string>
     <string name="convConvertBTN">Převést</string>
@@ -30,4 +31,5 @@
     <string name="toolbarConv">Konverze</string>
     <string name="toolbarAbout">O aplikaci</string>
     <string name="restoreMain">Obnovit</string>
+    <string name="errorConvEnterValidValue">Zadejte validní hodnotu</string>
 </resources>
