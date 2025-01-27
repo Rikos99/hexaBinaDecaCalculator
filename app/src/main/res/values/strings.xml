@@ -27,9 +27,13 @@
     <string name="convInputHEX">Zadejte hexadecimální číslo</string>
     <string name="convInputBIN">Zadejte binární číslo</string>
     <string name="convConvertBTN">Převést</string>
-    <string name="toolbarMain">Kalkulačka</string>
-    <string name="toolbarConv">Konverze</string>
-    <string name="toolbarAbout">O aplikaci</string>
     <string name="restoreMain">Obnovit</string>
     <string name="errorConvEnterValidValue">Zadejte validní hodnotu</string>
+    <string name="binary">Binární</string>
+    <string name="decimal">Decimální</string>
+    <string name="hexadecimal">Hexadecimální</string>
+    <string name="errorMainWriteToFile">Chyba zapsání do souboru!</string>
+    <string name="navHistory">Historie</string>
+    <string name="errorHistoryReadFromFile">Chyba čtení ze souboru!</string>
+    <string name="historyFile">history.txt</string>
 </resources>

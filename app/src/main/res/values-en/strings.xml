@@ -28,9 +28,13 @@
     <string name="convInputHEX">Enter a hexadecimal number</string>
     <string name="convInputBIN">Enter a binary number</string>
     <string name="convConvertBTN">Convert</string>
-    <string name="toolbarMain">Calculator</string>
-    <string name="toolbarConv">Conversion</string>
-    <string name="toolbarAbout">About</string>
     <string name="restoreMain">Restore</string>
     <string name="errorConvEnterValidValue">Enter a valid value</string>
+    <string name="binary">Binary</string>
+    <string name="decimal">Decimal</string>
+    <string name="hexadecimal">Hexadecimal</string>
+    <string name="errorMainWriteToFile">Failed to write to file!</string>
+    <string name="navHistory">History</string>
+    <string name="errorHistoryReadFromFile">Failed to read from file!</string>
+    <string name="historyFile">history.txt</string>
 </resources>

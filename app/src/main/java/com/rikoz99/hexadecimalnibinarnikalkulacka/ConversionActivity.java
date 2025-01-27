@@ -12,6 +12,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class ConversionActivity extends NavigationActivity {
 
     Spinner convModeFrom_SPIN, convModeTo_SPIN;
@@ -25,7 +29,7 @@ public class ConversionActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_conversion);
         this.setBottomMenu(R.id.bottomNavItemConversion);
-        this.setToolbar(getString(R.string.toolbarConv), true);
+        this.setToolbar(getString(R.string.navConv), true);
 
 
         //Nastavení 2 drop down menu
@@ -87,43 +91,62 @@ public class ConversionActivity extends NavigationActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        convert_BTN.setOnClickListener(new View.OnClickListener() {
+        convert_BTN.setOnClickListener(new View.OnClickListener() { //Výpočet
             @Override
             public void onClick(View view) {
                 //zkontrolovat validitu inputu
                 try
                 {
+                    File path = getFilesDir();
+                    File file = new File(path, getString(R.string.historyFile));
+
                     // vzít input, převést ho na decimální
                     int input=0;
-                    String result = null;
+                    String result = null, resultToHistory = null;
                     if(convModeFrom_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
                         input = Integer.parseInt(input_ET.getText().toString());
+                        resultToHistory = "(Dec) ";
                     }
                     else if(convModeFrom_SPIN.getSelectedItemPosition() == 1) //Bin
                     {
                         input = Integer.parseInt(input_ET.getText().toString(), 2);
+                        resultToHistory = "(Bin) ";
                     }
                     else if (convModeFrom_SPIN.getSelectedItemPosition() == 2) //Hex
                     {
                         input = Integer.parseInt(input_ET.getText().toString(), 16);
+                        resultToHistory = "(Hex) ";
                     }
+                    resultToHistory += input + " -> ";
 
                     //decimální input převést na zvolený typ
 
                     if(convModeTo_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
                         result = Integer.toString(input);
+                        resultToHistory += "(Dec) ";
                     }
                     else if(convModeTo_SPIN.getSelectedItemPosition() == 1) //Bin
                     {
                         result = Integer.toString(input, 2);
+                        resultToHistory += "(Bin) ";
                     }
                     else if (convModeTo_SPIN.getSelectedItemPosition() == 2) //Hex
                     {
                         result = Integer.toString(input, 16);
+                        resultToHistory += "(Hex) ";
                     }
+                    resultToHistory += result + "\n";
                     result_TV.setText(result);
+
+                    try {
+                        FileWriter fileWriter = new FileWriter(file, true); // pro přidávání textu na konec souboru // druhý parametr = append (boolean)
+                        fileWriter.write(resultToHistory);
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        Toast.makeText(ConversionActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();
+                    }
                 }
                 catch (NumberFormatException e)
                 {

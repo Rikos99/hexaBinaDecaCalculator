@@ -26,6 +26,7 @@ public class NavigationActivity extends AppCompatActivity
         Intent intAbout = new Intent(this, AboutActivity.class);
         Intent intConv = new Intent(this, ConversionActivity.class);
         Intent intSettings = new Intent(this, SettingsActivity.class);
+        Intent intHistory = new Intent(this, HistoryActivity.class);
 
         bottomNav = findViewById(R.id.bottomNavigation);
         bottomNav.setSelectedItemId(selectedItemID);
@@ -44,6 +45,10 @@ public class NavigationActivity extends AppCompatActivity
                 else if(itemID == R.id.bottomNavItemAbout)
                 {
                     startActivity(intAbout);
+                }
+                else if(itemID == R.id.bottomNavItemHistory)
+                {
+                    startActivity(intHistory);
                 }
                 return false;
             }
@@ -82,6 +87,10 @@ public class NavigationActivity extends AppCompatActivity
         else if(itemId == R.id.optionsMenuItemSearch)
         {
             Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+        }
+        else if(itemId == R.id.optionsMenuItemHistory)
+        {
+            //TODO smazat historii pomocí již vytvořené metody v HistoryActivity
         }
 
         return super.onOptionsItemSelected(item);

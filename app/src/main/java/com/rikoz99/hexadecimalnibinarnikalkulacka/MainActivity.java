@@ -16,6 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainActivity extends NavigationActivity {
 
     EditText input1_ET, input2_ET;
@@ -28,7 +32,7 @@ public class MainActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setBottomMenu(R.id.bottomNavItemCalc);
-        this.setToolbar(getString(R.string.toolbarMain), false);
+        this.setToolbar(getString(R.string.navCalc), false);
 
 
         input1_ET = findViewById(R.id.inputDEC1);
@@ -93,7 +97,9 @@ public class MainActivity extends NavigationActivity {
             try
             {
                 SharedPreferences.Editor editor = getSharedPreferences("preferences", MODE_PRIVATE).edit();
-                String result;
+                String result, resultToHistory;
+                File path = getFilesDir();
+                File file = new File(path, getString(R.string.historyFile));
                 if(mode_SPIN.getSelectedItemPosition() == 0) //DEC
                 {
                     double dec1, dec2;
@@ -101,6 +107,7 @@ public class MainActivity extends NavigationActivity {
                     dec1 = Double.parseDouble(input1_ET.getText().toString());
                     dec2 = Double.parseDouble(input2_ET.getText().toString());
                     result = String.valueOf(dec1 + dec2);
+                    resultToHistory = getString(R.string.decimal) + ": ";
                 }
                 else if(mode_SPIN.getSelectedItemPosition() == 1) //BIN
                 {
@@ -109,6 +116,7 @@ public class MainActivity extends NavigationActivity {
                     bin1 = Integer.parseInt(input1_ET.getText().toString(), 2);
                     bin2 = Integer.parseInt(input2_ET.getText().toString(), 2);
                     result = Integer.toBinaryString(bin1 + bin2);
+                    resultToHistory = getString(R.string.binary) + ": ";
                 }
                 else //HEX
                 {
@@ -117,10 +125,24 @@ public class MainActivity extends NavigationActivity {
                     hex1 = Integer.parseInt(input1_ET.getText().toString(), 16);
                     hex2 = Integer.parseInt(input2_ET.getText().toString(), 16);
                     result = Integer.toString(hex1 + hex2, 16);
+                    resultToHistory = getString(R.string.hexadecimal) + ": ";
                 }
+
+
                 editor.putString("input1", input1_ET.getText().toString());
                 editor.putString("input2", input2_ET.getText().toString());
                 editor.apply(); //async uložení; synchronní metodou commit
+
+                resultToHistory += input1_ET.getText().toString() + " + " + input2_ET.getText().toString() + " = " + result + "\n";
+
+                try {
+                    FileWriter fileWriter = new FileWriter(file, true); // pro přidávání textu na konec souboru // druhý parametr = append (boolean)
+                    fileWriter.write(resultToHistory);
+                    fileWriter.close();
+                } catch (IOException e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();
+                }
+
                 result_TV.setText(result);
             }
             catch (NumberFormatException e)

@@ -17,7 +17,7 @@ public class AboutActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         this.setBottomMenu(R.id.bottomNavItemAbout);
-        this.setToolbar(getString(R.string.toolbarAbout), true);
+        this.setToolbar(getString(R.string.navAbout), true);
 
         goToGitHub = findViewById(R.id.buttonGitHub);
         goToGitHub.setOnClickListener(view -> {
