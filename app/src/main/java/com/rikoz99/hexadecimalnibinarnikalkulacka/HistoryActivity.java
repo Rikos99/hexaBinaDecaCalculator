@@ -1,14 +1,17 @@
 package com.rikoz99.hexadecimalnibinarnikalkulacka;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class HistoryActivity extends NavigationActivity {
@@ -42,15 +45,34 @@ public class HistoryActivity extends NavigationActivity {
         history.setText(new String(bytes));
     }
 
-    private boolean vymazatHistorii()
+    public boolean vymazatHistorii()
     {
         File file = new File(getFilesDir(), getString(R.string.historyFile));
-        return file.delete();
+        try
+        {
+            new FileWriter(file, false).write("");
+            history.setText("");
+            return true;
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu_history, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.optionsMenuItemHistory)
+        {
+            vymazatHistorii();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

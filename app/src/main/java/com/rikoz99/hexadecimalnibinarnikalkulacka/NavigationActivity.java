@@ -88,10 +88,6 @@ public class NavigationActivity extends AppCompatActivity
         {
             Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
         }
-        else if(itemId == R.id.optionsMenuItemHistory)
-        {
-            //TODO smazat historii pomocí již vytvořené metody v HistoryActivity
-        }
 
         return super.onOptionsItemSelected(item);
     }
