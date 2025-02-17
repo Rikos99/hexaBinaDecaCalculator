@@ -22,6 +22,7 @@ public class ConversionActivity extends NavigationActivity {
     EditText input_ET;
     TextView result_TV;
     Button convert_BTN;
+    DbHelper dbHelper;
 
 
     @Override
@@ -42,7 +43,9 @@ public class ConversionActivity extends NavigationActivity {
         input_ET = findViewById(R.id.etCisloConv);
         result_TV = findViewById(R.id.textViewConvert);
         convert_BTN = findViewById(id.btnConvert);
+        dbHelper = new DbHelper(getApplicationContext());
 
+        //Nastavení spinnerů
 
         // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> adapterFrom = ArrayAdapter.createFromResource(
@@ -101,7 +104,7 @@ public class ConversionActivity extends NavigationActivity {
                     File file = new File(path, getString(R.string.historyFile));
 
                     // vzít input, převést ho na decimální
-                    int input=0;
+                    int input = 0;
                     String result = null, resultToHistory = null;
                     if(convModeFrom_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
@@ -118,7 +121,7 @@ public class ConversionActivity extends NavigationActivity {
                         input = Integer.parseInt(input_ET.getText().toString(), 16);
                         resultToHistory = "(Hex) ";
                     }
-                    resultToHistory += input + " -> ";
+                    resultToHistory += input_ET.getText() + " -> ";
 
                     //decimální input převést na zvolený typ
 
@@ -140,13 +143,14 @@ public class ConversionActivity extends NavigationActivity {
                     resultToHistory += result + "\n";
                     result_TV.setText(result);
 
-                    try {
+                    insertNewConversion(input, convModeFrom_SPIN.getSelectedItemPosition(), convModeTo_SPIN.getSelectedItemPosition());
+
+                    try
+                    {
                         FileWriter fileWriter = new FileWriter(file, true); // pro přidávání textu na konec souboru // druhý parametr = append (boolean)
                         fileWriter.write(resultToHistory);
                         fileWriter.close();
-                    } catch (IOException e) {
-                        Toast.makeText(ConversionActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();
-                    }
+                    } catch (IOException e) {Toast.makeText(ConversionActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();}
                 }
                 catch (NumberFormatException e)
                 {
@@ -154,5 +158,12 @@ public class ConversionActivity extends NavigationActivity {
                 }
             }
         });
+    }
+
+    private void insertNewConversion(int number, int from, int to)
+    {
+        ConversionEntryModel conversion = new ConversionEntryModel(-1, number, from, to);
+        long conversionId = dbHelper.insertConversion(conversion);
+        Toast.makeText(ConversionActivity.this, "Záznam úspěšně vložen do DB. ID: " + conversionId, Toast.LENGTH_SHORT).show();
     }
 }
