@@ -34,13 +34,13 @@ public class HistoryActivity extends NavigationActivity {
 
         byte[] bytes = new byte[length];
 
-        try {
+        try
+        {
             FileInputStream stream = new FileInputStream(file);
             stream.read(bytes);
             stream.close();
-        } catch (IOException e) {
-            Toast.makeText(HistoryActivity.this, getString(R.string.errorHistoryReadFromFile), Toast.LENGTH_SHORT).show();
         }
+        catch (IOException e) { Toast.makeText(HistoryActivity.this, getString(R.string.errorHistoryReadFromFile), Toast.LENGTH_SHORT).show(); }
 
         history.setText(new String(bytes));
     }
@@ -61,7 +61,7 @@ public class HistoryActivity extends NavigationActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu_history, menu);
+        getMenuInflater().inflate(R.menu.options_menu_default, menu);
         return true;
     }
 
@@ -69,7 +69,7 @@ public class HistoryActivity extends NavigationActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
 
-        if(itemId == R.id.optionsMenuItemHistory)
+        if(itemId == R.id.optionsMenuItemClear)
         {
             vymazatHistorii();
         }

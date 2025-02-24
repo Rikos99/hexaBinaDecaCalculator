@@ -3,18 +3,25 @@ package com.rikoz99.hexadecimalnibinarnikalkulacka;
 import static com.rikoz99.hexadecimalnibinarnikalkulacka.R.*;
 
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ConversionActivity extends NavigationActivity {
 
@@ -23,6 +30,7 @@ public class ConversionActivity extends NavigationActivity {
     TextView result_TV;
     Button convert_BTN;
     DbHelper dbHelper;
+    ListView history;
 
 
     @Override
@@ -43,6 +51,8 @@ public class ConversionActivity extends NavigationActivity {
         input_ET = findViewById(R.id.etCisloConv);
         result_TV = findViewById(R.id.textViewConvert);
         convert_BTN = findViewById(id.btnConvert);
+        history = findViewById(R.id.listViewHistory);
+
         dbHelper = new DbHelper(getApplicationContext());
 
         //Nastavení spinnerů
@@ -165,5 +175,35 @@ public class ConversionActivity extends NavigationActivity {
         ConversionEntryModel conversion = new ConversionEntryModel(-1, number, from, to);
         long conversionId = dbHelper.insertConversion(conversion);
         Toast.makeText(ConversionActivity.this, "Záznam úspěšně vložen do DB. ID: " + conversionId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.optionsMenuItemClear)
+        {
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Použít list view
+
+    public void naplnitHistorii()
+    {
+        ArrayList<ConversionEntryModel> historyItems = dbHelper.getAllConversions();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                layout.item_layout,
+                R.id.listViewItem
+        );
+
+        adapter.addAll(historyItems.toString());
+    }
+    public void vymazatHistorii()
+    {
+
     }
 }

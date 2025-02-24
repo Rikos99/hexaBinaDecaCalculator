@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/optionsMenuItemSave"
-        android:title="Save"
-        android:icon="@drawable/baseline_save_24"
+        android:id="@+id/optionsMenuItemClear"
+        android:title="Clear"
+        android:icon="@drawable/baseline_delete_24"
         app:showAsAction="ifRoom"
         />
     <item

@@ -1,12 +1,9 @@
 package com.rikoz99.hexadecimalnibinarnikalkulacka;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,15 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class MainActivity extends NavigationActivity {
 
     EditText input1_ET, input2_ET;
-    TextView result_TV;
+    TextView result_TV, history;
     Spinner mode_SPIN; //0 - decimal, 1 - binary, 2 - hexadecimal
-    Button compute_BTN, restore_BTN;
+    Button compute_BTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +33,12 @@ public class MainActivity extends NavigationActivity {
         this.setToolbar(getString(R.string.navCalc), false);
 
 
-        input1_ET = findViewById(R.id.inputDEC1);
-        input2_ET = findViewById(R.id.inputDEC2);
-        result_TV = findViewById(R.id.textView);
-        mode_SPIN = findViewById(R.id.spinner_mode);
-        compute_BTN = findViewById(R.id.compute_BTN);
-        restore_BTN = findViewById(R.id.restoreMain_BTN);
+        input1_ET =     findViewById(R.id.inputDEC1);
+        input2_ET =     findViewById(R.id.inputDEC2);
+        result_TV =     findViewById(R.id.textView);
+        mode_SPIN =     findViewById(R.id.spinner_mode);
+        compute_BTN =   findViewById(R.id.compute_BTN);
+        history =       findViewById(R.id.history_TV);
 
         if(savedInstanceState != null)
         {
@@ -96,7 +94,6 @@ public class MainActivity extends NavigationActivity {
         {
             try
             {
-                SharedPreferences.Editor editor = getSharedPreferences("preferences", MODE_PRIVATE).edit();
                 String result, resultToHistory;
                 File path = getFilesDir();
                 File file = new File(path, getString(R.string.historyFile));
@@ -128,22 +125,17 @@ public class MainActivity extends NavigationActivity {
                     resultToHistory = getString(R.string.hexadecimal) + ": ";
                 }
 
-
-                editor.putString("input1", input1_ET.getText().toString());
-                editor.putString("input2", input2_ET.getText().toString());
-                editor.apply(); //async uložení; synchronní metodou commit
-
                 resultToHistory += input1_ET.getText().toString() + " + " + input2_ET.getText().toString() + " = " + result + "\n";
 
-                try {
+                try
+                {
                     FileWriter fileWriter = new FileWriter(file, true); // pro přidávání textu na konec souboru // druhý parametr = append (boolean)
                     fileWriter.write(resultToHistory);
                     fileWriter.close();
-                } catch (IOException e) {
-                    Toast.makeText(MainActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();
-                }
+                } catch (IOException e) { Toast.makeText(MainActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show(); }
 
                 result_TV.setText(result);
+                history.append(resultToHistory);
             }
             catch (NumberFormatException e)
             {
@@ -151,14 +143,7 @@ public class MainActivity extends NavigationActivity {
             }
         });
 
-        restore_BTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
-                input1_ET.setText(sharedPreferences.getString("input1", ""));
-                input2_ET.setText(sharedPreferences.getString("input2", ""));
-            }
-        });
+        naplnitHistorii();
     }
 
     @Override
@@ -185,4 +170,49 @@ public class MainActivity extends NavigationActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
      */
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if(itemId == R.id.optionsMenuItemClear)
+        {
+            vymazatHistorii();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void naplnitHistorii()
+    {
+
+        File path = getFilesDir();
+        File file = new File(path, getString(R.string.historyFile));
+
+        int length = (int) file.length();
+
+        byte[] bytes = new byte[length];
+
+        try
+        {
+            FileInputStream stream = new FileInputStream(file);
+            stream.read(bytes);
+            stream.close();
+        }
+        catch (IOException e) { Toast.makeText(MainActivity.this, getString(R.string.errorHistoryReadFromFile), Toast.LENGTH_SHORT).show(); }
+
+        history.setText(new String(bytes));
+    }
+
+    public void vymazatHistorii()
+    {
+        File file = new File(getFilesDir(), getString(R.string.historyFile));
+        try
+        {
+            new FileWriter(file, false).write("");
+            history.setText("");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

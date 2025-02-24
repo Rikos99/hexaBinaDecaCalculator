@@ -143,6 +143,12 @@ public class DbHelper extends SQLiteOpenHelper
         return db.delete(DbContract.Conversions.TABLE_NAME, DbContract.Conversions._ID + " = ?", new String[]{Integer.toString(conversionId)}) > 0;
     }
 
+    public boolean deleteAllConversations()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(DbContract.Conversions.TABLE_NAME, true + " = ?", new String[]{"true"}) > 0;
+    }
+
     public boolean updateConversion(ConversionEntryModel conversion)
     {
         SQLiteDatabase db = getWritableDatabase();

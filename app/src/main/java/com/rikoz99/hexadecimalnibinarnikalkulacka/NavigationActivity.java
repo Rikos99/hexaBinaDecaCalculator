@@ -25,7 +25,6 @@ public class NavigationActivity extends AppCompatActivity
         Intent intCalc = new Intent(this, MainActivity.class);
         Intent intAbout = new Intent(this, AboutActivity.class);
         Intent intConv = new Intent(this, ConversionActivity.class);
-        Intent intSettings = new Intent(this, SettingsActivity.class);
         Intent intHistory = new Intent(this, HistoryActivity.class);
 
         bottomNav = findViewById(R.id.bottomNavigation);
@@ -67,28 +66,23 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.options_menu_conversion, menu);
+        getMenuInflater().inflate(R.menu.options_menu_default, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    /*
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
 
         if(itemId == R.id.optionsMenuItemSettings)
         {
-            //startActivity(intSettings);
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-        }
-        else if(itemId == R.id.optionsMenuItemSave)
-        {
-            Toast.makeText(this, "Save", Toast.LENGTH_SHORT).show();
-        }
-        else if(itemId == R.id.optionsMenuItemSearch)
-        {
-            Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+            Intent intSettings = new Intent(this, SettingsActivity.class);
+            startActivity(intSettings);
+            //Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+     */
 }

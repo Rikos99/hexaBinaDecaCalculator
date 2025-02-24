@@ -19,19 +19,20 @@
         android:id="@+id/convertSpinnerModeFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/convertSpinnerModeTo"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         />
+
     <Spinner
         android:id="@+id/convertSpinnerModeTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/etCisloConv"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/convertSpinnerModeFrom" />
 
 
     <EditText
@@ -41,10 +42,9 @@
         android:ems="10"
         android:hint="@string/convInputBIN"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/convertSpinnerModeTo" />
 
     <Button
         android:id="@+id/btnConvert"
@@ -63,6 +63,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnConvert" />
 
+    <ListView
+        android:id="@+id/listViewHistory"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewConvert">
+    </ListView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
@@ -71,5 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
