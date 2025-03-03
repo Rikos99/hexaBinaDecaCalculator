@@ -92,7 +92,7 @@ public class DbHelper extends SQLiteOpenHelper
                 DbContract.Conversions.COLUMN_NAME_CONVERSION_RESULT
         };
 
-        String sortOrder = DbContract.Conversions._ID + "ASC";
+        String sortOrder = DbContract.Conversions._ID + " ASC";
 
         Cursor cursor = db.query(
                 DbContract.Conversions.TABLE_NAME,

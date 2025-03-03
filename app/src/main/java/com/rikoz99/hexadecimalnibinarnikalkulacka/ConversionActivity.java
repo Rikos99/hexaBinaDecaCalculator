@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -80,8 +84,10 @@ public class ConversionActivity extends NavigationActivity {
         // Apply the adapter to the spinner.
         convModeFrom_SPIN.setAdapter(adapterTo);
 
+        naplnitHistorii();
 
-        convModeFrom_SPIN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        convModeFrom_SPIN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 0) //Dec
@@ -104,29 +110,28 @@ public class ConversionActivity extends NavigationActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        convert_BTN.setOnClickListener(new View.OnClickListener() { //Výpočet
+        //Výpočet
+        convert_BTN.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 //zkontrolovat validitu inputu
-                try
-                {
+                try {
                     File path = getFilesDir();
                     File file = new File(path, getString(R.string.historyFile));
 
                     // vzít input, převést ho na decimální
                     int input = 0;
                     String result = null, resultToHistory = null;
-                    if(convModeFrom_SPIN.getSelectedItemPosition() == 0) //Dec
+                    if (convModeFrom_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
                         input = Integer.parseInt(input_ET.getText().toString());
                         resultToHistory = "(Dec) ";
-                    }
-                    else if(convModeFrom_SPIN.getSelectedItemPosition() == 1) //Bin
+                    } else if (convModeFrom_SPIN.getSelectedItemPosition() == 1) //Bin
                     {
                         input = Integer.parseInt(input_ET.getText().toString(), 2);
                         resultToHistory = "(Bin) ";
-                    }
-                    else if (convModeFrom_SPIN.getSelectedItemPosition() == 2) //Hex
+                    } else if (convModeFrom_SPIN.getSelectedItemPosition() == 2) //Hex
                     {
                         input = Integer.parseInt(input_ET.getText().toString(), 16);
                         resultToHistory = "(Hex) ";
@@ -135,17 +140,15 @@ public class ConversionActivity extends NavigationActivity {
 
                     //decimální input převést na zvolený typ
 
-                    if(convModeTo_SPIN.getSelectedItemPosition() == 0) //Dec
+                    if (convModeTo_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
                         result = Integer.toString(input);
                         resultToHistory += "(Dec) ";
-                    }
-                    else if(convModeTo_SPIN.getSelectedItemPosition() == 1) //Bin
+                    } else if (convModeTo_SPIN.getSelectedItemPosition() == 1) //Bin
                     {
                         result = Integer.toString(input, 2);
                         resultToHistory += "(Bin) ";
-                    }
-                    else if (convModeTo_SPIN.getSelectedItemPosition() == 2) //Hex
+                    } else if (convModeTo_SPIN.getSelectedItemPosition() == 2) //Hex
                     {
                         result = Integer.toString(input, 16);
                         resultToHistory += "(Hex) ";
@@ -154,13 +157,6 @@ public class ConversionActivity extends NavigationActivity {
                     result_TV.setText(result);
 
                     insertNewConversion(input, convModeFrom_SPIN.getSelectedItemPosition(), convModeTo_SPIN.getSelectedItemPosition());
-
-                    try
-                    {
-                        FileWriter fileWriter = new FileWriter(file, true); // pro přidávání textu na konec souboru // druhý parametr = append (boolean)
-                        fileWriter.write(resultToHistory);
-                        fileWriter.close();
-                    } catch (IOException e) {Toast.makeText(ConversionActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show();}
                 }
                 catch (NumberFormatException e)
                 {
@@ -194,13 +190,67 @@ public class ConversionActivity extends NavigationActivity {
     {
         ArrayList<ConversionEntryModel> historyItems = dbHelper.getAllConversions();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<ConversionEntryModel> adapter = new ArrayAdapter<ConversionEntryModel>(
                 this,
-                layout.item_layout,
-                R.id.listViewItem
-        );
+                R.layout.item_layout,
+                R.id.textViewFrom,
+                historyItems
+        )
+        {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
 
-        adapter.addAll(historyItems.toString());
+                TextView from = view.findViewById(R.id.textViewFrom);
+                TextView number = view.findViewById(R.id.textViewNumber);
+                TextView to = view.findViewById(R.id.textViewTo);
+                TextView result = view.findViewById(R.id.textViewResult);
+
+                System.out.println("Výsledek: " + historyItems.get(position).getFrom());
+                //getFrom a getTo vrací něco jako ID konverzí => switch
+
+                String fromStr= "", toStr = "";
+                switch (historyItems.get(position).getFrom())
+                {
+                    case 0 -> {}
+                    case 1 -> {}
+                    case 2 -> {}
+                }
+                switch (historyItems.get(position).getTo())
+                {
+                    case 0 -> {}
+                    case 1 -> {}
+                    case 2 -> {}
+                }
+                from.setText(fromStr);
+                number.setText(String.valueOf(historyItems.get(position).getNumber()));
+                to.setText(toStr);
+                result.setText(String.valueOf(historyItems.get(position).getResult()));
+
+                return view;
+            }
+        };
+        history.setAdapter(adapter);
+
+        /*
+                @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = view.findViewById(android.R.id.text1);
+                TextView text2 = view.findViewById(android.R.id.text2);
+
+                text1.setText(friends.get(position).getName());
+                text2.setText(Integer.toString(friends.get(position).getFriendFrom()));
+                return view;
+            }
+
+         */
+
+        //System.out.println(historyItems.toString());
+
+        //adapter.addAll(historyItems.toString());
     }
     public void vymazatHistorii()
     {
