@@ -1,6 +1,8 @@
 package com.rikoz99.hexadecimalnibinarnikalkulacka;
 
 import androidx.annotation.NonNull;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,15 +20,17 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MainActivity extends NavigationActivity {
+public class MainActivity extends NavigationActivity
+{
 
     EditText input1_ET, input2_ET;
-    TextView result_TV, history;
+    TextView history;
     Spinner mode_SPIN; //0 - decimal, 1 - binary, 2 - hexadecimal
     Button compute_BTN;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setBottomMenu(R.id.bottomNavItemCalc);
@@ -35,15 +39,10 @@ public class MainActivity extends NavigationActivity {
 
         input1_ET =     findViewById(R.id.inputDEC1);
         input2_ET =     findViewById(R.id.inputDEC2);
-        result_TV =     findViewById(R.id.textView);
         mode_SPIN =     findViewById(R.id.spinner_mode);
         compute_BTN =   findViewById(R.id.compute_BTN);
         history =       findViewById(R.id.history_TV);
 
-        if(savedInstanceState != null)
-        {
-            result_TV.setText(savedInstanceState.getString("vysledek"));
-        }
 
         //Nastavení drop down menu
 
@@ -83,7 +82,6 @@ public class MainActivity extends NavigationActivity {
 
                 input1_ET.setText("");
                 input2_ET.setText("");
-                result_TV.setText("");
             }
 
             @Override
@@ -134,8 +132,9 @@ public class MainActivity extends NavigationActivity {
                     fileWriter.close();
                 } catch (IOException e) { Toast.makeText(MainActivity.this, getString(R.string.errorMainWriteToFile), Toast.LENGTH_SHORT).show(); }
 
-                result_TV.setText(result);
-                history.append(resultToHistory);
+                CharSequence tmp = history.getText();
+                history.setText(resultToHistory);
+                history.append(tmp);
             }
             catch (NumberFormatException e)
             {
@@ -156,7 +155,6 @@ public class MainActivity extends NavigationActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString("input1", input1_ET.getText().toString());
         outState.putString("input2", input2_ET.getText().toString());
-        outState.putString("vysledek", result_TV.getText().toString());
 
         super.onSaveInstanceState(outState);
     }
@@ -179,6 +177,11 @@ public class MainActivity extends NavigationActivity {
         {
             vymazatHistorii();
         }
+        else if(itemId == R.id.optionsMenuItemSettings)
+        {
+            Intent goToSettings = new Intent(this, SettingsActivity.class);
+            startActivity(goToSettings);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -188,19 +191,30 @@ public class MainActivity extends NavigationActivity {
         File path = getFilesDir();
         File file = new File(path, getString(R.string.historyFile));
 
-        int length = (int) file.length();
-
-        byte[] bytes = new byte[length];
-
-        try
+        if(file.exists())
         {
-            FileInputStream stream = new FileInputStream(file);
-            stream.read(bytes);
-            stream.close();
-        }
-        catch (IOException e) { Toast.makeText(MainActivity.this, getString(R.string.errorHistoryReadFromFile), Toast.LENGTH_SHORT).show(); }
+            int length = (int) file.length();
 
-        history.setText(new String(bytes));
+            byte[] bytes = new byte[length];
+
+            try
+            {
+                FileInputStream stream = new FileInputStream(file);
+                stream.read(bytes);
+                stream.close();
+            }
+            catch (IOException e) { Toast.makeText(MainActivity.this, getString(R.string.errorHistoryReadFromFile), Toast.LENGTH_SHORT).show(); }
+
+            history.setText(new String(bytes));
+        }
+        else
+        {
+            try
+            {
+                file.createNewFile();
+            }
+            catch (IOException e) { throw new RuntimeException(e); }
+        }
     }
 
     public void vymazatHistorii()

@@ -25,7 +25,6 @@ public class NavigationActivity extends AppCompatActivity
         Intent intCalc = new Intent(this, MainActivity.class);
         Intent intAbout = new Intent(this, AboutActivity.class);
         Intent intConv = new Intent(this, ConversionActivity.class);
-        Intent intHistory = new Intent(this, HistoryActivity.class);
 
         bottomNav = findViewById(R.id.bottomNavigation);
         bottomNav.setSelectedItemId(selectedItemID);
@@ -44,10 +43,6 @@ public class NavigationActivity extends AppCompatActivity
                 else if(itemID == R.id.bottomNavItemAbout)
                 {
                     startActivity(intAbout);
-                }
-                else if(itemID == R.id.bottomNavItemHistory)
-                {
-                    startActivity(intHistory);
                 }
                 return false;
             }

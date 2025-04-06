@@ -11,11 +11,6 @@
         android:icon="@drawable/baseline_numbers_24"
         />
     <item
-        android:id="@+id/bottomNavItemHistory"
-        android:title="@string/navHistory"
-        android:icon="@drawable/baseline_history_24"
-        />
-    <item
         android:id="@+id/bottomNavItemAbout"
         android:title="@string/navAbout"
         android:icon="@drawable/baseline_person_24"

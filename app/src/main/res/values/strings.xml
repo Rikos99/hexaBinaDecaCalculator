@@ -36,4 +36,9 @@
     <string name="navHistory">Historie</string>
     <string name="errorHistoryReadFromFile">Chyba čtení ze souboru!</string>
     <string name="historyFile">history.txt</string>
+    <string name="aboutBakalari">Zkontrolovat Bakaláře</string>
+    <string name="settingsPassword">Heslo</string>
+    <string name="settingsConfirm">Potvrdit</string>
+    <string name="navSettings">Nastavení</string>
+    <string name="settingsUsername">Uživatelské jméno</string>
 </resources>

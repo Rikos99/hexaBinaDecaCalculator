@@ -5,12 +5,12 @@ import androidx.annotation.NonNull;
 public class ConversionEntryModel
 {
     private int id;
-    private int number;
+    private String number;
     private int from;
     private int to;
     private String result;
 
-    public ConversionEntryModel(int id, int number, int from, int to)
+    public ConversionEntryModel(int id, String number, int from, int to)
     {
         this.id = id;
         this.number = number;
@@ -21,23 +21,23 @@ public class ConversionEntryModel
 
         if(this.to == 0) //Dec
         {
-            this.result = Integer.toString(number);
+            this.result = number;
         }
         else if(this.to == 1) //Bin
         {
-            this.result = Integer.toString(number, 2);
+            this.result = Integer.toString(Integer.parseInt(number), 2);
         }
         else if (this.to == 2) //Hex
         {
-            this.result = Integer.toString(number, 16);
+            this.result = Integer.toString(Integer.parseInt(number), 16);
         }
     }
 
     public ConversionEntryModel() {}
 
-    public int getNumber() {return number;}
+    public String getNumber() {return number;}
 
-    public void setNumber(int number) {this.number = number;}
+    public void setNumber(String number) {this.number = number;}
 
     public int getFrom() {return from;}
 

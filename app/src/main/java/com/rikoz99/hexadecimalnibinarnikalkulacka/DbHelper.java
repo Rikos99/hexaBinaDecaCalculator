@@ -69,7 +69,7 @@ public class DbHelper extends SQLiteOpenHelper
         if(cursor.moveToFirst())
         {
             int id = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions._ID)));
-            int number = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_NUMBER)));
+            String number = cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_NUMBER));
             int from = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_FROM)));
             int to = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_TO)));
 
@@ -92,7 +92,7 @@ public class DbHelper extends SQLiteOpenHelper
                 DbContract.Conversions.COLUMN_NAME_CONVERSION_RESULT
         };
 
-        String sortOrder = DbContract.Conversions._ID + " ASC";
+        String sortOrder = DbContract.Conversions._ID + " DESC";
 
         Cursor cursor = db.query(
                 DbContract.Conversions.TABLE_NAME,
@@ -109,7 +109,7 @@ public class DbHelper extends SQLiteOpenHelper
         while(cursor.moveToNext())
         {
             int id = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions._ID)));
-            int number = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_NUMBER)));
+            String number = cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_NUMBER));
             int from = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_FROM)));
             int to = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.Conversions.COLUMN_NAME_CONVERSION_TO)));
 
@@ -143,10 +143,10 @@ public class DbHelper extends SQLiteOpenHelper
         return db.delete(DbContract.Conversions.TABLE_NAME, DbContract.Conversions._ID + " = ?", new String[]{Integer.toString(conversionId)}) > 0;
     }
 
-    public boolean deleteAllConversations()
+    public int deleteAllConversions()
     {
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete(DbContract.Conversions.TABLE_NAME, true + " = ?", new String[]{"true"}) > 0;
+        return db.delete(DbContract.Conversions.TABLE_NAME, null, null);
     }
 
     public boolean updateConversion(ConversionEntryModel conversion)

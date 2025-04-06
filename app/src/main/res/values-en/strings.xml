@@ -37,4 +37,9 @@
     <string name="navHistory">History</string>
     <string name="errorHistoryReadFromFile">Failed to read from file!</string>
     <string name="historyFile">history.txt</string>
+    <string name="aboutBakalari">Check Bakaláři</string>
+    <string name="settingsPassword">Password</string>
+    <string name="settingsConfirm">Confirm</string>
+    <string name="navSettings">Settings</string>
+    <string name="settingsUsername">Username</string>
 </resources>
