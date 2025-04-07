@@ -1,13 +1,8 @@
 package com.rikoz99.hexadecimalnibinarnikalkulacka;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,7 +10,7 @@ public class SettingsActivity extends NavigationActivity {
 
     //TODO možnosti vypnutí a zapnutí historie, výchozí módy v kalkulačce a převaděči
     Button Confirm;
-    EditText URL, Email, Password;
+    EditText URL, Username, Password;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -24,19 +19,28 @@ public class SettingsActivity extends NavigationActivity {
         this.setToolbar(getString(R.string.navSettings), true);
 
         SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        Confirm = findViewById(R.id.settingsConfirm);
+        URL = findViewById(R.id.settingsURL);
+        Username = findViewById(R.id.settingsUsername);
+        Password = findViewById(R.id.settingsPassword);
 
         //editor.putString("nastaveni", "hodnota");
         //editor.apply(); //async uložení; synchronní metodou commit
 
-        SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
         //získání hodnoty z preferences: sharedPreferences.getString("nastaveni", "hodnota"));
 
+        URL.setText(sharedPreferences.getString("url", "https://example.com/"));
+        Username.setText(sharedPreferences.getString("username", "ItsAMeMario"));
+
         Confirm.setOnClickListener(v -> {
-            if(!URL.getText().toString().isEmpty() && !Email.getText().toString().isEmpty() && !Password.getText().toString().isEmpty())
+            if(!URL.getText().toString().isEmpty() && !Username.getText().toString().isEmpty() && !Password.getText().toString().isEmpty())
             {
                 editor.putString("url", URL.getText().toString());
-                editor.putString("username", Email.getText().toString());
+                editor.putString("username", Username.getText().toString());
                 editor.putString("password", Password.getText().toString());
+                editor.apply();
+                finish();
             }
         });
     }

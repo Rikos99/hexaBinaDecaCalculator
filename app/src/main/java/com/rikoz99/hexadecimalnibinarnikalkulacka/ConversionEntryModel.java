@@ -19,9 +19,23 @@ public class ConversionEntryModel
 
         //převedení čísla na číslo správné soustavy
 
+        if(this.from == 0) //Dec
+        {
+            number = String.valueOf(Integer.parseInt(number, 10));
+        }
+        else if(this.from == 1) //Bin
+        {
+            number = String.valueOf(Integer.parseInt(number, 2));
+        }
+        else if (this.from == 2) //Hex
+        {
+            number = String.valueOf(Integer.parseInt(number, 16));
+        }
+
+
         if(this.to == 0) //Dec
         {
-            this.result = number;
+            this.result = Integer.toString(Integer.parseInt(number), 10);
         }
         else if(this.to == 1) //Bin
         {

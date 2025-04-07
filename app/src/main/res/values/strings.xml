@@ -41,4 +41,8 @@
     <string name="settingsConfirm">Potvrdit</string>
     <string name="navSettings">Nastavení</string>
     <string name="settingsUsername">Uživatelské jméno</string>
+    <string name="aboutWrongURL">Špatná URL adresa a nebo Bakaláři nefungují</string>
+    <string name="aboutWrongLogin">Máš špatné jméno/heslo</string>
+    <string name="aboutBakalariWorks">Bakaláři nečekaně fungují</string>
+    <string name="aboutBakalariNotWorks">Bakaláři nepřekvapivě nefungují</string>
 </resources>

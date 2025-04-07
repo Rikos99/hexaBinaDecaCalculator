@@ -137,17 +137,15 @@ public class ConversionActivity extends NavigationActivity {
                     if (convModeTo_SPIN.getSelectedItemPosition() == 0) //Dec
                     {
                         result = Integer.toString(input);
-                        resultToHistory += "(Dec) ";
-                    } else if (convModeTo_SPIN.getSelectedItemPosition() == 1) //Bin
+                    }
+                    else if (convModeTo_SPIN.getSelectedItemPosition() == 1) //Bin
                     {
                         result = Integer.toString(input, 2);
-                        resultToHistory += "(Bin) ";
-                    } else if (convModeTo_SPIN.getSelectedItemPosition() == 2) //Hex
+                    }
+                    else if (convModeTo_SPIN.getSelectedItemPosition() == 2) //Hex
                     {
                         result = Integer.toString(input, 16);
-                        resultToHistory += "(Hex) ";
                     }
-                    resultToHistory += result + "\n";
 
                     insertNewConversion(input_ET.getText().toString(), convModeFrom_SPIN.getSelectedItemPosition(), convModeTo_SPIN.getSelectedItemPosition());
 
@@ -164,8 +162,7 @@ public class ConversionActivity extends NavigationActivity {
     private void insertNewConversion(String number, int from, int to)
     {
         ConversionEntryModel conversion = new ConversionEntryModel(-1, number, from, to);
-        long conversionId = dbHelper.insertConversion(conversion);
-        Toast.makeText(ConversionActivity.this, "Záznam úspěšně vložen do DB. ID: " + conversionId, Toast.LENGTH_SHORT).show();
+        dbHelper.insertConversion(conversion);
     }
 
     @Override

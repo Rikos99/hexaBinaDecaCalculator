@@ -42,4 +42,8 @@
     <string name="settingsConfirm">Confirm</string>
     <string name="navSettings">Settings</string>
     <string name="settingsUsername">Username</string>
+    <string name="aboutWrongURL">Wrong URL address or Bakaláři are down</string>
+    <string name="aboutWrongLogin">Wrong username/password</string>
+    <string name="aboutBakalariWorks">Bakaláři are surpsisingly working</string>
+    <string name="aboutBakalariNotWorks">Bakaláři unsurpsisingly aren\'t working</string>
 </resources>

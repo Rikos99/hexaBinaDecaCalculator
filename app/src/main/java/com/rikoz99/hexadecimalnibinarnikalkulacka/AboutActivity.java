@@ -1,10 +1,7 @@
 package com.rikoz99.hexadecimalnibinarnikalkulacka;
 
 
-import static okhttp3.MultipartBody.FORM;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,7 +30,7 @@ public class AboutActivity extends NavigationActivity
 {
     Button goToGitHub, checkBakalari;
     String responseBody;
-    TextView response;
+    TextView responseTV;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -45,7 +41,7 @@ public class AboutActivity extends NavigationActivity
 
         SharedPreferences sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
 
-        response = findViewById(R.id.aboutAPIresponse);
+        responseTV = findViewById(R.id.aboutAPIresponse);
 
         goToGitHub = findViewById(R.id.buttonGitHub);
         goToGitHub.setOnClickListener(view -> {
@@ -55,7 +51,7 @@ public class AboutActivity extends NavigationActivity
 
         checkBakalari = findViewById(R.id.buttonBakalari);
         checkBakalari.setOnClickListener(view -> {
-            if(sharedPreferences.getString("login", "").isEmpty())
+            if(sharedPreferences.getString("username", "").isEmpty())
             {
                 Intent goToSettings = new Intent(this, SettingsActivity.class);
                 startActivity(goToSettings);
@@ -68,21 +64,39 @@ public class AboutActivity extends NavigationActivity
                 Request request = new Request.Builder()
                         .header("Content-Type", "application/x-www-form-urlencoded")
                         .url(sharedPreferences.getString("url", "") + "api/login")
-                        .post(RequestBody.create(FORM, "client_id=ANDR&grant_type=password&username=" + sharedPreferences.getString("username", "") + "&password=" + sharedPreferences.getString("password", "")))
+                        .method("POST", RequestBody.create(null, "client_id=ANDR&grant_type=password&username=" + sharedPreferences.getString("username", "") + "&password=" + sharedPreferences.getString("password", "")))
                         .build();
+                System.out.println(request.body().toString());
                 client.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                    public void onFailure(@NonNull Call call, @NonNull IOException e)
+                    {
+                        AboutActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                responseTV.setText(R.string.aboutWrongURL);
+                                System.out.println(e.getMessage());
+                                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                            }
+                        });
                     }
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         responseBody = response.body().string();
+                        final int responseStatus = response.code();
+                        System.out.println(responseStatus);
                         AboutActivity.this.runOnUiThread(new Runnable() {
                             @Override
-                            public void run() {
-                                showResponse();
+                            public void run()
+                            {
+                                if(responseStatus == 400)
+                                {
+                                    responseTV.setText(R.string.aboutWrongLogin);
+                                }
+                                else {
+                                    showResponse();
+                                }
                             }
                         });
                     }
@@ -111,13 +125,18 @@ public class AboutActivity extends NavigationActivity
         return super.onOptionsItemSelected(item);
     }
     private void showResponse() {
-        response.setText(responseBody);
+        responseTV.setText(responseBody);
 
         try {
             JSONObject json = new JSONObject(responseBody);
-            Double temperature = json.getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0).getJSONObject("data").getJSONObject("instant").getJSONObject("details").getDouble("air_temperature");
-
-            response.setText(Double.toString(temperature));
+            if(!json.getString("access_token").isEmpty())
+            {
+                responseTV.setText(R.string.aboutBakalariWorks);
+            }
+            else
+            {
+                responseTV.setText(R.string.aboutBakalariNotWorks);
+            }
         }
         catch (JSONException e) {
             Log.d("JSONExc", e.toString());
